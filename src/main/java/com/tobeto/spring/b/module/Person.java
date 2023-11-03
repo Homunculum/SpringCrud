@@ -1,6 +1,5 @@
-package com.tobeto.spring.b;
+package com.tobeto.spring.b.module;
 
-// Boilerplate => Basmakalıp
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,8 +8,8 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@AllArgsConstructor // => tüm argümanları olan ctor
-@NoArgsConstructor // 0 argümanlı ctor
+@AllArgsConstructor
+@NoArgsConstructor
 public class Person {
     private int id;
     private String name;

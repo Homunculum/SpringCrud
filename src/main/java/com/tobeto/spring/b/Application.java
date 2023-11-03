@@ -15,4 +15,6 @@ public class Application {
 		SpringApplication.run(Application.class, args);
 	}
 
+	public static class Category {
+	}
 }
