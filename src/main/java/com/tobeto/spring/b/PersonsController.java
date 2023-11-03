@@ -11,6 +11,7 @@ import java.util.Optional;
 @RequestMapping("api/persons") // Bu controllerın kontrol edeceği alt routeları tanımlamak
 public class PersonsController {
     List<Person> inMemoryList = new ArrayList<>();
+
     // In Memory DB
     // CRUD => Create,Read,Update,Delete
 
@@ -42,12 +43,30 @@ public class PersonsController {
     {
         inMemoryList.add(person);
     }
-    @PutMapping
-    public void update(@RequestBody Person person){
+    @PutMapping("{id}")
+    public String update(@PathVariable int id, @RequestBody Person person){
+        Person person1 = getById(id);
+        if (person1 != null) {
+            person1.setName(person.getName());
+            person1.setSurname(person.getSurname());
+            person1.setAge(person.getAge());
+            return "Kullanıcı güncellendi: ID: " +id+", İsim: " +inMemoryList.get(id).getName()+", Soyisim: "+ inMemoryList.get(id).getSurname()+", Yaş: " +inMemoryList.get(id).getAge();
+        }else {
+            return "Kullanıcı bulunamadı";
+        }
+
+        /*if (inMemoryList.get(id) != null) {
+            inMemoryList.get(id).setName(person.getName());
+            inMemoryList.get(id).setSurname(person.getSurname());
+            inMemoryList.get(id).setAge(person.getAge());
+            return "Kullanıcı güncellendi: ID: " +id+", İsim: " +inMemoryList.get(id).getName()+", Soyisim: "+ inMemoryList.get(id).getSurname()+", Yaş: " +inMemoryList.get(id).getAge();
+        }else {
+            return "Kullanıcı bulunamadı";
+        }*/
 
     }
     @DeleteMapping("{id}")
     public void delete(@PathVariable int id){
-
+        inMemoryList.remove(id);
     }
 }
