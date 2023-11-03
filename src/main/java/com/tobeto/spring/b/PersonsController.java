@@ -43,30 +43,36 @@ public class PersonsController {
     {
         inMemoryList.add(person);
     }
+
     @PutMapping("{id}")
     public String update(@PathVariable int id, @RequestBody Person person){
-        Person person1 = getById(id);
-        if (person1 != null) {
-            person1.setName(person.getName());
-            person1.setSurname(person.getSurname());
-            person1.setAge(person.getAge());
-            return "Kullanıcı güncellendi: ID: " +id+", İsim: " +inMemoryList.get(id).getName()+", Soyisim: "+ inMemoryList.get(id).getSurname()+", Yaş: " +inMemoryList.get(id).getAge();
-        }else {
-            return "Kullanıcı bulunamadı";
+        for (Person persons : inMemoryList) {
+            if (persons.getId() == id) {
+                persons.setName(person.getName());
+                persons.setSurname(person.getSurname());
+                persons.setAge(person.getAge());
+                return "Kullanıcı güncellendi: " +
+                        "ID: " +id+
+                        ", İsim: " +persons.getName()+
+                        ", Soyisim: "+ persons.getSurname()+
+                        ", Yaş: " +persons.getAge();
+
+            }else {
+                return "Kullanıcı bulunamadı";
+            }
         }
-
-        /*if (inMemoryList.get(id) != null) {
-            inMemoryList.get(id).setName(person.getName());
-            inMemoryList.get(id).setSurname(person.getSurname());
-            inMemoryList.get(id).setAge(person.getAge());
-            return "Kullanıcı güncellendi: ID: " +id+", İsim: " +inMemoryList.get(id).getName()+", Soyisim: "+ inMemoryList.get(id).getSurname()+", Yaş: " +inMemoryList.get(id).getAge();
-        }else {
-            return "Kullanıcı bulunamadı";
-        }*/
-
+        return null;
     }
     @DeleteMapping("{id}")
-    public void delete(@PathVariable int id){
-        inMemoryList.remove(id);
+    public String delete(@PathVariable int id) {
+        for (Person persons : inMemoryList) {
+            if (persons.getId() == id) {
+                inMemoryList.remove(persons);
+                return persons.getName() + " Silindi";
+            }else {
+                return "Kullanıcı bulunamadı";
+            }
+        }
+        return null;
     }
 }
