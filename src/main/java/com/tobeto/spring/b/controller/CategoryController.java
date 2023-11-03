@@ -29,19 +29,23 @@ public class CategoryController {
 
 
     @PostMapping
-    public void setCategoryName(@RequestBody Category category) {
+    public String setCategoryName(@RequestBody Category category) {
         inCategoryList.add(category);
+
+        return "Kategori Eklendi: " +
+                "ID: " + category.getId() +
+                ", Kategorti İsmi: " + category.getName();
     }
 
     @PutMapping("{id}")
     public String update(@PathVariable int id, @RequestBody Category category) {
-        for (Category categorys : inCategoryList) {
-            if (categorys.getId() == id) {
-                categorys.setName(categorys.getName());
+        for (Category categories : inCategoryList) {
+            if (categories.getId() == id) {
+                categories.setName(category.getName());
 
                 return "Kategori Değiştirildi: " +
                         "ID: " + id +
-                        ",Kategorti İsmi: " + categorys.getName();
+                        ",Kategorti İsmi: " + categories.getName();
 
 
             } else {
@@ -53,10 +57,10 @@ public class CategoryController {
 
     @DeleteMapping("{id}")
     public String delete(@PathVariable int id) {
-        for (Category categorys : inCategoryList) {
-            if (categorys.getId() == id) {
-                inCategoryList.remove(categorys);
-                return categorys.getName() + " Silindi";
+        for (Category categories : inCategoryList) {
+            if (categories.getId() == id) {
+                inCategoryList.remove(categories);
+                return categories.getName() + " Silindi";
             } else {
                 return "Kategori bulunamadı";
             }

@@ -28,8 +28,12 @@ public class ProductContreller {
     }
 
     @PostMapping
-    public void setInProductList(@RequestBody Product product) {
+    public String setInProductList(@RequestBody Product product) {
         inProductList.add(product);
+        return "Ürün eklendi: " +
+                "ID: " + product.getId() +
+                ", Ürün: " + product.getName() +
+                ", Fiyat: " + product.getPrice();
     }
 
     @PutMapping("{id}")
@@ -38,7 +42,7 @@ public class ProductContreller {
             if (products.getId() == id) {
                 products.setName(product.getName());
                 products.setPrice(product.getPrice());
-                return "Kullanıcı güncellendi: " +
+                return "Ürün güncellendi: " +
                         "ID: " + id +
                         ", Ürün: " + products.getName() +
                         ", Fiyat: " + products.getPrice();

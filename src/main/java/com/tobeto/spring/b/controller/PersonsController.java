@@ -30,8 +30,13 @@ public class PersonsController {
     }
 
     @PostMapping
-    public void setInPersonList(@RequestBody Person person) {
+    public String setInPersonList(@RequestBody Person person) {
         inPersonList.add(person);
+       return "Kullanıcı eklendi: " +
+                "ID: " + person.getId() +
+                ", İsim: " + person.getName() +
+                ", Soyisim: " + person.getSurname() +
+                ", Yaş: " + person.getAge();
     }
 
     @PutMapping("{id}")
