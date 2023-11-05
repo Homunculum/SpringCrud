@@ -41,7 +41,20 @@ public class PersonsController {
 
     @PutMapping("{id}")
     public String update(@PathVariable int id, @RequestBody Person person) {
-        for (Person persons : inPersonList) {
+        Person persons = inPersonList
+            .stream()
+            .filter((p) -> p.getId() == id)
+            .findFirst()
+            .orElseThrow();
+        persons.setName(person.getName());
+        persons.setSurname(person.getSurname());
+        persons.setAge(person.getAge());
+        return "Kullanıcı güncellendi: " +
+                "ID: " + id +
+                ", İsim: " + persons.getName() +
+                ", Soyisim: " + persons.getSurname() +
+                ", Yaş: " + persons.getAge();
+        /*for (Person persons : inPersonList) {
             if (persons.getId() == id) {
                 persons.setName(person.getName());
                 persons.setSurname(person.getSurname());
@@ -56,12 +69,20 @@ public class PersonsController {
                 return "Kullanıcı bulunamadı";
             }
         }
-        return null;
+        return null;*/
     }
 
     @DeleteMapping("{id}")
     public String delete(@PathVariable int id) {
-        for (Person persons : inPersonList) {
+        Person persons = inPersonList
+                .stream()
+                .filter((p) -> p.getId() == id)
+                .findFirst()
+                .orElseThrow();
+        inPersonList.remove(persons);
+        return persons.getName() + " Silindi";
+    }
+        /*for (Person persons : inPersonList) {
             if (persons.getId() == id) {
                 inPersonList.remove(persons);
                 return persons.getName() + " Silindi";
@@ -70,5 +91,5 @@ public class PersonsController {
             }
         }
         return null;
-    }
+    }*/
 }

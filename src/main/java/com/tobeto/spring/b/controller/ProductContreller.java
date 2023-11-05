@@ -38,7 +38,19 @@ public class ProductContreller {
 
     @PutMapping("{id}")
     public String updateProduct(@PathVariable int id, @RequestBody Product product) {
-        for (Product products : inProductList) {
+        Product products = inProductList.stream()  //for döngüsü yerine burası
+                .filter((p) -> p.getId() == id).findFirst()  //if döngüsü için burası
+                .orElseThrow(); //ürün bulunamadığında null döndür
+        products.setName(product.getName());
+        products.setPrice(product.getPrice());
+
+        return "Ürün güncellendi: " +
+                "ID: " + id +
+                ", Ürün: " + products.getName() +
+                ", Fiyat: " + products.getPrice();
+    }
+
+        /*for (Product products : inProductList) {
             if (products.getId() == id) {
                 products.setName(product.getName());
                 products.setPrice(product.getPrice());
@@ -50,11 +62,16 @@ public class ProductContreller {
             }
         }
         return null;
-    }
+}*/
 
     @DeleteMapping("{id}")
     public String deleteProduct(@PathVariable int id) {
-        for (Product products : inProductList) {
+        Product products = inProductList.stream()  //for döngüsü yerine burası
+                .filter((p) -> p.getId() == id).findFirst()  //if döngüsü için burası
+                .orElseThrow(); //ürün bulunamadığında null döndür
+        inProductList.remove(products);
+        return products.getName() + " Silindi";
+        /*for (Product products : inProductList) {
             if (products.getId() == id) {
                 inProductList.remove(products);
                 return products.getName() + " Silindi";
@@ -62,6 +79,6 @@ public class ProductContreller {
                 return "Ürün bulunamadı";
             }
         }
-        return null;
+        return null;*/
     }
 }

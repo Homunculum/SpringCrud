@@ -39,7 +39,17 @@ public class CategoryController {
 
     @PutMapping("{id}")
     public String update(@PathVariable int id, @RequestBody Category category) {
-        for (Category categories : inCategoryList) {
+        Category categories = inCategoryList
+                .stream()
+                .filter((p) -> p.getId() == id)
+                .findFirst()
+                .orElseThrow();
+        categories.setName(category.getName());
+
+        return "Kategori Değiştirildi: " +
+                "ID: " + id +
+                ",Kategorti İsmi: " + categories.getName();
+        /*for (Category categories : inCategoryList) {
             if (categories.getId() == id) {
                 categories.setName(category.getName());
 
@@ -52,12 +62,20 @@ public class CategoryController {
                 return "Kategori bulunamadı";
             }
         }
-        return null;
+        return null;*/
     }
 
     @DeleteMapping("{id}")
     public String delete(@PathVariable int id) {
-        for (Category categories : inCategoryList) {
+        Category categories = inCategoryList
+                .stream()
+                .filter((p) -> p.getId() == id)
+                .findFirst()
+                .orElseThrow();
+        inCategoryList.remove(categories);
+        return categories.getName() + " Silindi";
+    }
+       /* for (Category categories : inCategoryList) {
             if (categories.getId() == id) {
                 inCategoryList.remove(categories);
                 return categories.getName() + " Silindi";
@@ -66,5 +84,5 @@ public class CategoryController {
             }
         }
         return null;
-    }
+    }*/
 }
